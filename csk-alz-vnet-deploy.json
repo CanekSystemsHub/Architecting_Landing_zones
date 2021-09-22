@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "csk-hub-p-eus2-net-vnet",
+            "metadata": {
+                "description": "Name of the Hub Virtual Network"
+            }
+        },
+        "DomainController-Subnet-Name": {
+            "type": "string",
+            "metadata": {
+                "description": "The Name of the Windows Domain Controllers Subnet"
+            }
+        },
+        "Mgmt-Tools-Subnet-Name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name og the Managemnt Tools VM Subnet"
+            }
+        },
+        "Mgmt-Subnet-Name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of Management Subnet"
+            }
+        },
+        "VnetAddress-Space": {
+            "type": "string",
+            "metadata": {
+                "description": "Virtual Network Address Space"
+            }
+        },
+        "DC-subnet-Address-Space": {
+            "type": "string",
+            "metadata": {
+                "description": "DC subnet Address Space"
+            }
+        },
+        "Mgmt-Tools-VNet-Address-Space": {
+            "type": "string",
+            "metadata": {
+                "description": "Mgmt Tools VM address Space"
+            }
+        },
+        "Mgmt-Subnet-Address-Space": {
+            "type": "string",
+            "metadata": {
+                "description": "This is the Mgmt Subnet Address Space"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "[parameters('vnetName')]"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('VnetAddress-Space')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('DomainController-Subnet-Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('DC-subnet-Address-Space')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('Mgmt-Tools-Subnet-Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('Mgmt-Tools-VNet-Address-Space')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('Mgmt-Subnet-Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('Mgmt-Subnet-Address-Space')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "avsName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the the Availability Set"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('avsName')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2019-07-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "[parameters('avsName')]"
+            },
+            "properties": {
+            }
+        }
+    ],
+    "outputs": {}
+}

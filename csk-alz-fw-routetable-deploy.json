@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "routeTableName": {
+            "type": "string",
+            "metadata": {
+                "description": "This is the Route Table Name for the Firewall"
+            }
+        },
+        "Route1-Name": {
+            "type": "string",
+            "metadata": {
+                "description": "Route Name"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('routeTableName')]",
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+            },
+            "properties": {
+                "routes": [
+                    {
+                        "name": "[parameters('Route1-Name')]",
+                        "properties": {
+                            "addressPrefix": "destinationCIDR",
+                            "nextHopType": "VirtualNetworkGateway",
+                            "nextHopIpAddress": "0.0.0.0"
+                        }
+                    }
+                ],
+                "disableBgpRoutePropagation": true
+            }
+        }
+    ],
+    "outputs": {}
+}
